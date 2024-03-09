@@ -1,7 +1,12 @@
 import { Layout } from "@/components";
 import { useDocumentTitle } from "@mantine/hooks";
+import { Hero } from "./Hero";
 
 export function HomePage() {
   useDocumentTitle("Home");
-  return <Layout>Hello?</Layout>;
+  return (
+    <Layout>
+      <Hero />
+    </Layout>
+  );
 }

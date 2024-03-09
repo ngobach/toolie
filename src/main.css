@@ -1,1 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+:root[data-mantine-color-scheme="light"] {
+  --mantine-color-body: var(--mantine-color-gray-1);
+}
