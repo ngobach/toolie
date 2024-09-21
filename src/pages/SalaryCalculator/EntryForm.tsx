@@ -1,6 +1,18 @@
 import React from "react";
-import { Button, Flex, NumberInput, Select, SimpleGrid } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Flex,
+  NumberInput,
+  Select,
+  SimpleGrid,
+} from "@mantine/core";
 import { Form, useForm, zodResolver } from "@mantine/form";
+import {
+  IconFileExport,
+  IconFileImport,
+  IconReload,
+} from "@tabler/icons-react";
 import { z } from "zod";
 import { SalaryCalculationInputs } from "./utils";
 
@@ -34,47 +46,96 @@ const mockInitialValues: SalaryCalculationInputs | null = import.meta.env.DEV
     }
   : null;
 
+const emptyInitialValues: SalaryCalculationInputs = {
+  salary: null!,
+  insuaranceSalary: null,
+  untaxableAllowance: null,
+  taxableAllowance: null,
+  numberOfDependents: 0,
+  salaryMonthsPerYear: 12,
+  livingArea: "1",
+};
+
 export const EntryForm: React.FC<Props> = ({ initialValues, onSubmit }) => {
   const form = useForm<SalaryCalculationInputs>({
-    initialValues: initialValues ??
-      mockInitialValues ?? {
-        salary: null!,
-        insuaranceSalary: null,
-        untaxableAllowance: null,
-        taxableAllowance: null,
-        numberOfDependents: 0,
-        salaryMonthsPerYear: 12,
-        livingArea: "1",
-      },
+    initialValues: initialValues ?? mockInitialValues ?? emptyInitialValues,
+    onValuesChange(values) {
+      if (values.insuaranceSalary === ("" as unknown)) {
+        values.insuaranceSalary = null;
+      }
+    },
     validate: zodResolver(formSchema),
   });
+
+  const handleImportForm = () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "application/json";
+
+    fileInput.addEventListener("change", (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result) {
+            const json = event.target.result as string;
+            form.setValues(JSON.parse(json));
+          }
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    fileInput.click();
+  };
+
+  const handleExportForm = () => {
+    const json = JSON.stringify(form.values, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "salary-calculator.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleResetForm = () => {
+    form.setInitialValues(mockInitialValues ?? emptyInitialValues);
+    form.reset();
+  };
 
   return (
     <Form form={form} onSubmit={onSubmit}>
       <SimpleGrid cols={{ xs: 2, sm: 3 }} spacing="lg">
         <NumberInput
-          label="Salary"
-          description="Gross (VND)"
-          placeholder="10.000.000"
+          label="Basic salary"
+          suffix="₫"
+          placeholder="10,000,000"
+          thousandSeparator=","
           {...form.getInputProps("salary")}
         />
         <NumberInput
-          label="Untaxable allowance"
-          description="(VND)"
-          placeholder="2.000.000"
+          label="Non-taxable allowance"
+          suffix="₫"
+          placeholder="2,000,000"
+          thousandSeparator=","
           {...form.getInputProps("untaxableAllowance")}
         />
         <NumberInput
           label="Taxable allowance"
-          description="(VND)"
-          placeholder="3.000.000"
+          suffix="₫"
+          placeholder="3,000,000"
+          thousandSeparator=","
           {...form.getInputProps("taxableAllowance")}
         />
         <NumberInput
-          label="Inssuarance Salary"
-          description="Gross (VND)"
-          placeholder="20.000.000"
-          {...form.getInputProps("inssuaranceSalary")}
+          label="Insuarance calculation salary"
+          suffix="₫"
+          description="Default to basic salary"
+          placeholder="20,000,000"
+          thousandSeparator=","
+          {...form.getInputProps("insuaranceSalary")}
         />
         <NumberInput
           label="Dependents"
@@ -83,7 +144,7 @@ export const EntryForm: React.FC<Props> = ({ initialValues, onSubmit }) => {
           {...form.getInputProps("numberOfDependents")}
         />
         <NumberInput
-          label="Salary Months"
+          label="Salary months"
           description="You know it!"
           placeholder="14"
           {...form.getInputProps("salaryMonthsPerYear")}
@@ -102,10 +163,36 @@ export const EntryForm: React.FC<Props> = ({ initialValues, onSubmit }) => {
         />
       </SimpleGrid>
 
-      <Flex justify="end" mt="lg">
-        <Button type="submit" size="md">
-          Calculate my salary
-        </Button>
+      <Flex justify="end" mt="lg" gap="xs">
+        <ActionIcon.Group>
+          <ActionIcon
+            type="button"
+            variant="default"
+            size="input-sm"
+            onClick={handleImportForm}
+          >
+            <IconFileImport />
+          </ActionIcon>
+
+          <ActionIcon
+            type="button"
+            variant="default"
+            size="input-sm"
+            onClick={handleExportForm}
+          >
+            <IconFileExport />
+          </ActionIcon>
+
+          <ActionIcon
+            type="button"
+            variant="default"
+            size="input-sm"
+            onClick={handleResetForm}
+          >
+            <IconReload />
+          </ActionIcon>
+        </ActionIcon.Group>
+        <Button type="submit">Calculate my salary</Button>
       </Flex>
     </Form>
   );

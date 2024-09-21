@@ -44,7 +44,7 @@ export const ResultSheet: React.FC<Props> = ({ result }) => {
                 </Table.Td>
               </Table.Tr>
               <Table.Tr>
-                <Table.Td>Untaxable allowances</Table.Td>
+                <Table.Td>Non-taxable allowances</Table.Td>
                 <Table.Td>
                   <NumberFormatter
                     value={result.input.untaxableAllowance ?? 0}
@@ -66,15 +66,11 @@ export const ResultSheet: React.FC<Props> = ({ result }) => {
               <Table.Tr>
                 <Table.Td>Insurance salary</Table.Td>
                 <Table.Td>
-                  {typeof result.input.insuaranceSalary === "number" ? (
-                    <NumberFormatter
-                      value={result.input.insuaranceSalary}
-                      suffix={CurrencySymbols.VND}
-                      thousandSeparator
-                    />
-                  ) : (
-                    "N/A"
-                  )}
+                  <NumberFormatter
+                    value={result.input.insuaranceSalary ?? result.input.salary}
+                    suffix={CurrencySymbols.VND}
+                    thousandSeparator
+                  />
                 </Table.Td>
               </Table.Tr>
               <Table.Tr>
@@ -104,7 +100,7 @@ export const ResultSheet: React.FC<Props> = ({ result }) => {
             </Table.Thead>
             <Table.Tbody>
               <Table.Tr>
-                <Table.Td>Insurance</Table.Td>
+                <Table.Td>Total insurance</Table.Td>
                 <Table.Td>
                   <NumberFormatter
                     value={result.monthly.insurances.total}

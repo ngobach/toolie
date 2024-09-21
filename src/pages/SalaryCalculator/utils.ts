@@ -13,7 +13,6 @@ export type SalaryCalculationInputs = {
   untaxableAllowance: number | null;
   numberOfDependents: number;
   livingArea: "1" | "2" | "3" | "4" | null;
-  // For yearly calculation
   salaryMonthsPerYear: number;
 };
 
@@ -54,13 +53,13 @@ const getAreaMinimumSalary = (
 
   switch (area) {
     case "1":
-      return 4_680_000;
+      return 4_960_000;
     case "2":
-      return 4_160_000;
+      return 4_410_000;
     case "3":
-      return 3_640_000;
+      return 3_860_000;
     case "4":
-      return 3_250_000;
+      return 3_450_000;
   }
 };
 
@@ -99,7 +98,7 @@ const calculateMonthly = (
     input.salary +
     (input.taxableAllowance ?? 0) +
     (input.untaxableAllowance ?? 0);
-  const baseSalary = 1_800_000;
+  const baseSalary = 2_340_000;
   const areaMinSalary = getAreaMinimumSalary(input.livingArea);
   const insuaranceSalary = input.insuaranceSalary ?? input.salary;
   const socialInsurance = clamp(
@@ -124,7 +123,7 @@ const calculateMonthly = (
   const personalDeduction = 11_000_000;
   const dependentDeduction = 4_400_000 * input.numberOfDependents;
   const totalDeduction = personalDeduction + dependentDeduction;
-  const actualTaxedIncome = taxableIncome - totalDeduction;
+  const actualTaxedIncome = Math.max(0, taxableIncome - totalDeduction);
   const tax = calculateTax(actualTaxedIncome);
   const netIncome = taxableIncome - tax + (input.untaxableAllowance ?? 0);
 
@@ -142,7 +141,7 @@ const calculateMonthly = (
       dependent: dependentDeduction,
       total: totalDeduction,
     },
-    actualTaxedIncome: taxableIncome,
+    actualTaxedIncome,
     tax,
     netIncome,
   };
@@ -155,6 +154,7 @@ export const calculateSalary = (
   const yearlyBase = calculateMonthly({
     ...input,
     salary: input.salary * (input.salaryMonthsPerYear / 12),
+    insuaranceSalary: input.insuaranceSalary ?? input.salary,
   });
   const yearly = {
     totalIncome: yearlyBase.income * 12,
