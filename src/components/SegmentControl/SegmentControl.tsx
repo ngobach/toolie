@@ -1,22 +1,22 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { FieldErrorText } from "../FieldErrorText";
 
-export type RadioCardGroupOption = {
+export type SegmentControlOption = {
   label: string;
   value: string;
 };
 
-export type RadioCardGroupProps = {
+export type SegmentControlProps = {
   error?: string;
   label: string;
   name: string;
   onBlur: () => void;
   onValueChange: (value: string) => void;
-  options: RadioCardGroupOption[];
+  options: SegmentControlOption[];
   value: string;
 };
 
-export function RadioCardGroup({
+export function SegmentControl({
   error,
   label,
   name,
@@ -24,12 +24,12 @@ export function RadioCardGroup({
   onValueChange,
   options,
   value,
-}: RadioCardGroupProps) {
+}: SegmentControlProps) {
   return (
     <fieldset className="block">
       <legend className="text-sm font-medium text-slate-200">{label}</legend>
       <RadioGroup.Root
-        className="mt-3 flex flex-wrap gap-3"
+        className="mt-3 inline-flex w-full flex-wrap gap-2"
         name={name}
         onValueChange={onValueChange}
         value={value}
@@ -39,17 +39,16 @@ export function RadioCardGroup({
 
           return (
             <RadioGroup.Item
-              className={`inline-flex cursor-pointer items-center gap-2 rounded-xl border px-4 py-3 text-sm transition ${
+              className={`inline-flex min-w-[52px] flex-1 items-center justify-center rounded-md border px-4 py-2.5 text-sm font-medium outline-none ${
                 checked
-                  ? "border-primary-400/40 bg-primary-500/12 text-white"
-                  : "border-white/10 bg-black/25 text-slate-300 hover:border-white/16 hover:bg-white/[0.04]"
+                  ? "border-primary-300/40 bg-primary-500 text-white"
+                  : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06]"
               }`}
               key={option.value}
               onBlur={onBlur}
               value={option.value}
             >
-              <RadioGroup.Indicator className="h-2 w-2 rounded-full bg-current" />
-              <span>{option.label}</span>
+              {option.label}
             </RadioGroup.Item>
           );
         })}

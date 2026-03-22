@@ -1,4 +1,5 @@
 import { useForm } from "@tanstack/react-form";
+import { IMaskInput } from "react-imask";
 import { z } from "zod";
 import {
   Button,
@@ -7,7 +8,7 @@ import {
   MoneyInputField,
   PageIntro,
   PageLayout,
-  RadioCardGroup,
+  SegmentControl,
 } from "../../components";
 
 const areaOptions = ["I", "II", "III", "IV", "V"] as const;
@@ -150,14 +151,18 @@ export function GrossToNetPage() {
                     }
                     label="Dependants"
                   >
-                    <input
+                    <IMaskInput
                       className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-primary-400/40 focus:bg-black/40"
                       inputMode="numeric"
+                      mask={Number}
                       name={field.name}
+                      onAccept={(value) => field.handleChange(String(value))}
                       onBlur={field.handleBlur}
-                      onChange={(event) => field.handleChange(event.target.value)}
                       placeholder="Enter number of dependants"
-                      type="text"
+                      radix="."
+                      scale={0}
+                      thousandsSeparator=""
+                      unmask={false}
                       value={field.state.value}
                     />
                   </FormField>
@@ -195,7 +200,7 @@ export function GrossToNetPage() {
                 }}
               >
                 {(field) => (
-                  <RadioCardGroup
+                  <SegmentControl
                     error={
                       field.state.meta.isTouched
                         ? getFieldError(field.state.meta.errors)
