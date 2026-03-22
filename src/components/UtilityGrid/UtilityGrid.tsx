@@ -24,6 +24,7 @@ export function UtilityGrid({ items, title }: UtilityGridProps) {
         {items.map((item) => (
           <UtilityCard
             description={item.description}
+            icon={item.icon}
             key={item.title}
             meta={item.meta}
             title={item.title}

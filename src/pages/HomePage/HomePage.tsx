@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   ActivityPanel,
   CalloutPanel,
@@ -10,24 +11,139 @@ import {
 
 const utilityCards = [
   {
+    icon: (
+      <svg
+        aria-hidden="true"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 4L19 8V16L12 20L5 16V8L12 4Z"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M12 4V20M5 8L12 12L19 8"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+      </svg>
+    ),
     title: "Deploy Workspaces",
     description:
       "Create project environments with shared defaults, ownership rules, and deployment-ready metadata.",
     meta: "128 active setups",
   },
   {
+    icon: (
+      <svg
+        aria-hidden="true"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M5 17L9 13L12 16L18 10L19 11"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M6 19H18"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M18 10V14M18 10H14"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+      </svg>
+    ),
     title: "Inspect Usage",
     description:
       "Review operational load, export audit trails, and monitor usage spikes from a single stream.",
     meta: "Realtime insights",
   },
   {
+    icon: (
+      <svg
+        aria-hidden="true"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 7H17"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M7 12H13"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M7 17H11"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M15.5 14.5L18.5 17.5L15.5 20.5"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+      </svg>
+    ),
     title: "Automate Cleanup",
     description:
       "Run storage cleanup, retention policies, and recurring housekeeping without manual intervention.",
     meta: "9 queued runs",
   },
   {
+    icon: (
+      <svg
+        aria-hidden="true"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <rect
+          height="12"
+          rx="2.5"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          width="16"
+          x="4"
+          y="6"
+        />
+        <path
+          d="M4 10H20"
+          stroke="currentColor"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M8 15H11"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.8"
+        />
+      </svg>
+    ),
     title: "Manage Billing",
     description:
       "Preview invoice cycles, retry failed collections, and issue adjustments for internal service teams.",
@@ -54,6 +170,10 @@ const actions = [
 ];
 
 export function HomePage() {
+  useEffect(() => {
+    document.title = "Toolie Home";
+  }, []);
+
   return (
     <PageLayout>
       <div className="pt-10">
