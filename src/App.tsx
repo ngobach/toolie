@@ -1,217 +1,225 @@
-const navItems = ["Dashboard", "Tools", "Activity", "Teams"];
+const navItems = ["Products", "Developers", "Resources", "Enterprise"];
 
 const utilityCards = [
   {
-    title: "Workspace Generator",
+    title: "Deploy Workspaces",
     description:
-      "Spin up new project spaces with shared presets, ownership tags, and deployment metadata.",
-    status: "Active",
+      "Create project environments with shared defaults, ownership rules, and deployment-ready metadata.",
+    meta: "128 active setups",
   },
   {
-    title: "Asset Optimizer",
+    title: "Inspect Usage",
     description:
-      "Batch compress images, rename uploads, and prep delivery bundles for product teams.",
-    status: "Queued",
+      "Review operational load, export audit trails, and monitor usage spikes from a single stream.",
+    meta: "Realtime insights",
   },
   {
-    title: "Billing Console",
+    title: "Automate Cleanup",
     description:
-      "Preview invoice runs, monitor payment retries, and issue manual adjustments without leaving the portal.",
-    status: "Healthy",
+      "Run storage cleanup, retention policies, and recurring housekeeping without manual intervention.",
+    meta: "9 queued runs",
+  },
+  {
+    title: "Manage Billing",
+    description:
+      "Preview invoice cycles, retry failed collections, and issue adjustments for internal service teams.",
+    meta: "Healthy status",
   },
 ];
 
-const quickStats = [
-  { label: "Utility Runs", value: "12.4k", change: "+8.2%" },
-  { label: "Active Spaces", value: "318", change: "+14 new" },
-  { label: "Support Queue", value: "09", change: "-3 today" },
+const highlights = [
+  { label: "Monthly runs", value: "12.4k" },
+  { label: "Portal users", value: "318" },
+  { label: "Response SLA", value: "99.98%" },
 ];
 
-const feedItems = [
-  "Data export completed for Northwind Ops.",
-  "Storage cleanup rule updated by Platform team.",
-  "Billing retry recovered 14 subscriptions.",
+const activity = [
+  "Workspace deployment completed for Northwind Ops.",
+  "New retention rule published by the platform team.",
+  "Billing reconciliation recovered 14 subscriptions.",
+];
+
+const actions = [
+  "Create new workspace",
+  "Launch cleanup workflow",
+  "Export operations report",
 ];
 
 export default function App() {
   return (
     <div className="min-h-screen px-4 py-5 text-slate-100 sm:px-6 lg:px-8">
-      <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-7xl flex-col gap-6">
-        <header className="panel-card soft-ring sticky top-4 z-10 overflow-hidden">
+      <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl flex-col">
+        <header className="sticky top-4 z-10 border border-white/8 rounded-2xl bg-black/55 backdrop-blur-xl">
           <div className="flex flex-col gap-4 px-5 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-3">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-primary-500 via-primary-600 to-primary-900 text-sm font-semibold tracking-[0.24em] text-white shadow-lg shadow-primary-900/20">
+              <div className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white text-xs font-semibold tracking-[0.24em] text-black">
                 TU
               </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary-300">
-                  Toolie Portal
-                </p>
-                <p className="text-lg font-semibold text-white">
-                  Utilities Hub
-                </p>
+              <div className="flex items-center gap-3">
+                <p className="text-sm font-medium text-white">Toolie</p>
+                <span className="hidden text-xs text-slate-500 sm:inline">
+                  Utilities Portal
+                </span>
               </div>
             </div>
-            <nav aria-label="Primary" className="flex flex-wrap items-center gap-2">
+
+            <nav aria-label="Primary" className="flex flex-wrap items-center gap-1">
               {navItems.map((item) => (
                 <a
-                  className="rounded-lg px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-primary-500/14 hover:text-primary-200"
+                  className="rounded-md px-3 py-2 text-sm text-slate-400 transition hover:bg-white/6 hover:text-white"
                   href="/"
                   key={item}
                 >
                   {item}
                 </a>
               ))}
-              <button className="ml-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-500">
-                Open Console
+              <button className="ml-1 rounded-md border border-white/10 bg-white px-3.5 py-2 text-sm font-medium text-black transition hover:bg-slate-200">
+                Open Portal
               </button>
             </nav>
           </div>
         </header>
 
-        <main className="flex-1">
-          <div className="grid gap-6 lg:grid-cols-[1.55fr_1fr]">
-            <section className="panel-card soft-ring overflow-hidden">
-              <div className="border-b border-white/8 px-6 py-6 sm:px-8">
-                <div className="mb-4 inline-flex items-center gap-2 rounded-lg bg-primary-500/12 px-3 py-1 text-sm font-medium text-primary-200 ring-1 ring-primary-400/18">
-                  Internal utilities portal mockup
-                </div>
-                <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-                  <div className="space-y-4">
-                    <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-white md:text-5xl">
-                      One place to launch the tools your team uses every day.
-                    </h1>
-                    <p className="max-w-2xl text-base leading-7 text-slate-400">
-                      This mockup frames the product as an internal portal with
-                      quick access to operational utilities, service health, and
-                      recent activity across teams.
-                    </p>
-                    <div className="flex flex-wrap gap-3 pt-2">
-                      <button className="rounded-lg bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-primary-900/18 transition hover:bg-primary-700">
-                        Launch Utilities
-                      </button>
-                      <button className="rounded-lg bg-white/6 px-5 py-3 text-sm font-semibold text-slate-200 ring-1 ring-white/10 transition hover:bg-white/10">
-                        View Activity Feed
-                      </button>
-                    </div>
-                  </div>
+        <main className="flex-1 pt-10">
+          <section className="grid gap-10 border-b border-white/8 pb-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-400/20 bg-primary-500/10 px-3 py-1 text-xs font-medium text-primary-200">
+                Built for internal platform teams
+              </div>
+              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                A calmer, faster place to run the utilities your team depends on.
+              </h1>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
+                A Vercel-inspired portal concept with restrained surfaces,
+                editorial spacing, and clear pathways into deployments,
+                operations, and automation.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button className="rounded-md bg-white px-4 py-2.5 text-sm font-medium text-black transition hover:bg-slate-200">
+                  Start with deployments
+                </button>
+                <button className="rounded-md border border-white/10 bg-white/3 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-white/6">
+                  View recent activity
+                </button>
+              </div>
+            </div>
 
-                  <div className="rounded-2xl border border-white/8 bg-black/40 p-5 text-slate-200 shadow-2xl shadow-black/30">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-semibold text-white">
-                        System snapshot
-                      </p>
-                      <span className="rounded-lg bg-emerald-400/15 px-2.5 py-1 text-xs font-medium text-emerald-300">
-                        All systems normal
-                      </span>
-                    </div>
-                    <div className="mt-5 space-y-4 text-sm">
-                      {quickStats.map((stat) => (
-                        <div
-                          className="flex items-end justify-between border-b border-white/10 pb-3 last:border-b-0 last:pb-0"
-                          key={stat.label}
-                        >
-                          <div>
-                            <p className="text-slate-500">{stat.label}</p>
-                            <p className="mt-1 text-2xl font-semibold text-white">
-                              {stat.value}
-                            </p>
-                          </div>
-                          <span className="text-primary-300">{stat.change}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+            <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              {highlights.map((item) => (
+                <article
+                  className="rounded-xl border border-white/8 bg-white/[0.03] px-5 py-4"
+                  key={item.label}
+                >
+                  <p className="text-sm text-slate-500">{item.label}</p>
+                  <p className="mt-2 text-2xl font-semibold text-white">
+                    {item.value}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="grid gap-12 py-12 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-sm font-medium text-white">
+                    Operational toolkit
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Core workflows laid out as clean entry points.
+                  </p>
                 </div>
+                <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">
+                  4 utilities
+                </span>
               </div>
 
-              <div className="grid gap-4 px-6 py-6 sm:px-8 xl:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2">
                 {utilityCards.map((card) => (
-                  <article className="rounded-2xl bg-white/5 p-5 ring-1 ring-white/10" key={card.title}>
+                  <article
+                    className="group rounded-xl border border-white/8 bg-white/[0.02] p-5 transition hover:border-white/16 hover:bg-white/[0.04]"
+                    key={card.title}
+                  >
                     <div className="flex items-center justify-between gap-3">
-                      <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-primary-500/30 via-primary-400/12 to-white/8 ring-1 ring-primary-400/18" />
-                      <span className="rounded-lg bg-primary-500/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary-200">
-                        {card.status}
-                      </span>
+                      <div className="h-9 w-9 rounded-lg border border-primary-400/20 bg-primary-500/10" />
+                      <span className="text-xs text-slate-500">{card.meta}</span>
                     </div>
-                    <h2 className="mt-5 text-lg font-semibold text-white">
+                    <h2 className="mt-5 text-lg font-medium text-white">
                       {card.title}
                     </h2>
                     <p className="mt-2 text-sm leading-6 text-slate-400">
                       {card.description}
                     </p>
-                    <button className="mt-5 text-sm font-semibold text-primary-300 transition hover:text-primary-100">
+                    <div className="mt-5 text-sm font-medium text-primary-200 transition group-hover:text-white">
                       Open utility
-                    </button>
+                    </div>
                   </article>
                 ))}
               </div>
-            </section>
+            </div>
 
-            <section className="flex flex-col gap-6">
-              <article className="panel-card soft-ring p-6">
-                <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-6">
+              <section className="rounded-xl border border-white/8 bg-white/[0.02] p-6">
+                <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-sm font-semibold text-white">
-                      Quick actions
+                    <p className="text-sm font-medium text-white">
+                      Latest activity
                     </p>
                     <p className="mt-1 text-sm text-slate-500">
-                      Frequent tasks for operators and support teams.
+                      Changes across the portal in the last 24 hours.
                     </p>
                   </div>
-                  <span className="rounded-lg bg-primary-500/12 px-3 py-1 text-xs font-medium text-primary-200">
-                    6 saved
-                  </span>
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
                 </div>
-                <div className="mt-5 grid gap-3">
-                  {["Create workspace", "Run cleanup", "Export usage log", "Invite teammate"].map(
-                    (action) => (
-                      <button
-                        className="flex items-center justify-between rounded-xl bg-primary-500/10 px-4 py-4 text-left text-sm font-medium text-slate-200 ring-1 ring-primary-400/16 transition hover:bg-primary-500/16"
-                        key={action}
-                      >
-                        {action}
-                        <span className="text-primary-300">Open</span>
-                      </button>
-                    ),
-                  )}
-                </div>
-              </article>
 
-              <article className="panel-card soft-ring p-6">
-                <p className="text-sm font-semibold text-white">
-                  Recent activity
-                </p>
-                <div className="mt-5 space-y-4">
-                  {feedItems.map((item) => (
-                    <div className="flex gap-3" key={item}>
-                      <div className="mt-1 h-2.5 w-2.5 rounded-sm bg-primary-500" />
-                      <p className="text-sm leading-6 text-slate-400">{item}</p>
+                <div className="mt-6 space-y-4">
+                  {activity.map((item) => (
+                    <div
+                      className="border-b border-white/6 pb-4 last:border-b-0 last:pb-0"
+                      key={item}
+                    >
+                      <p className="text-sm leading-6 text-slate-300">{item}</p>
                     </div>
                   ))}
                 </div>
-              </article>
+              </section>
 
-              <article className="overflow-hidden rounded-2xl bg-gradient-to-br from-primary-600 via-primary-800 to-black p-6 text-white shadow-2xl shadow-primary-900/18">
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary-200">
-                  Need a new tool?
+              <section className="rounded-xl border border-white/8 bg-gradient-to-b from-white/[0.04] to-white/[0.02] p-6">
+                <p className="text-sm font-medium text-white">Quick actions</p>
+                <div className="mt-5 grid gap-3">
+                  {actions.map((action) => (
+                    <button
+                      className="flex items-center justify-between rounded-lg border border-white/8 bg-black/30 px-4 py-3 text-left text-sm text-slate-300 transition hover:border-primary-400/24 hover:text-white"
+                      key={action}
+                    >
+                      {action}
+                      <span className="text-primary-200">Run</span>
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section className="rounded-xl border border-primary-400/18 bg-primary-500/8 p-6">
+                <p className="text-sm font-medium text-primary-200">
+                  Build the next utility
                 </p>
-                <h2 className="mt-3 text-2xl font-semibold">
-                  Turn repeated manual work into a portal utility.
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-primary-100/90">
-                  Draft intake requirements, align ownership, and queue a build
-                  request for the platform team directly from this space.
+                <p className="mt-3 text-2xl font-medium text-white">
+                  Turn repeated manual work into a reliable internal workflow.
                 </p>
-                <button className="mt-5 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-primary-800 transition hover:bg-primary-50">
+                <p className="mt-3 text-sm leading-6 text-slate-400">
+                  Draft requirements, assign ownership, and move directly into a
+                  scoped implementation request.
+                </p>
+                <button className="mt-6 rounded-md bg-white px-4 py-2.5 text-sm font-medium text-black transition hover:bg-slate-200">
                   Submit request
                 </button>
-              </article>
-            </section>
-          </div>
+              </section>
+            </div>
+          </section>
         </main>
 
-        <footer className="px-1 pb-2 pt-1 text-center text-sm text-slate-500">
+        <footer className="border-t border-white/8 py-6 text-center text-sm text-slate-500">
           <p>© 2026 Toolie. Built for internal operations and shared utilities.</p>
         </footer>
       </div>
