@@ -1,15 +1,16 @@
 import { useForm } from "@tanstack/react-form";
-import * as RadioGroup from "@radix-ui/react-radio-group";
-import { IMaskInput } from "react-imask";
 import { z } from "zod";
-import { Button, PageIntro, PageLayout } from "../../components";
+import {
+  Button,
+  FormActions,
+  FormField,
+  MoneyInputField,
+  PageIntro,
+  PageLayout,
+  RadioCardGroup,
+} from "../../components";
 
 const areaOptions = ["I", "II", "III", "IV", "V"] as const;
-
-const labelClassName = "text-sm font-medium text-slate-200";
-const fieldClassName =
-  "w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-primary-400/40 focus:bg-black/40";
-const errorClassName = "mt-2 text-sm text-rose-300";
 
 const currencyFieldSchema = z
   .string()
@@ -60,6 +61,11 @@ function getFieldError(errors: unknown[]) {
 
   return undefined;
 }
+
+const areaOptionItems = areaOptions.map((area) => ({
+  label: area,
+  value: area,
+}));
 
 export function GrossToNetPage() {
   const form = useForm({
@@ -114,34 +120,18 @@ export function GrossToNetPage() {
                 }}
               >
                 {(field) => (
-                  <label className="block">
-                    <span className={labelClassName}>Monthly income</span>
-                    <div className="mt-2 flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-4 py-3 focus-within:border-primary-400/40 focus-within:bg-black/40">
-                      <IMaskInput
-                        className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
-                        inputMode="numeric"
-                        mask={Number}
-                        name={field.name}
-                        onAccept={(value) => field.handleChange(String(value))}
-                        onBlur={field.handleBlur}
-                        placeholder="Enter monthly income"
-                        radix="."
-                        scale={0}
-                        thousandsSeparator=","
-                        unmask={false}
-                        value={field.state.value}
-                      />
-                      <span className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
-                        VND
-                      </span>
-                    </div>
-                    {field.state.meta.isTouched &&
-                    getFieldError(field.state.meta.errors) ? (
-                      <p className={errorClassName}>
-                        {getFieldError(field.state.meta.errors)}
-                      </p>
-                    ) : null}
-                  </label>
+                  <MoneyInputField
+                    error={
+                      field.state.meta.isTouched
+                        ? getFieldError(field.state.meta.errors)
+                        : undefined
+                    }
+                    name="Monthly income"
+                    onBlur={field.handleBlur}
+                    onValueChange={field.handleChange}
+                    placeholder="Enter monthly income"
+                    value={field.state.value}
+                  />
                 )}
               </form.Field>
 
@@ -152,10 +142,16 @@ export function GrossToNetPage() {
                 }}
               >
                 {(field) => (
-                  <label className="block">
-                    <span className={labelClassName}>Dependants</span>
+                  <FormField
+                    error={
+                      field.state.meta.isTouched
+                        ? getFieldError(field.state.meta.errors)
+                        : undefined
+                    }
+                    label="Dependants"
+                  >
                     <input
-                      className={`mt-2 ${fieldClassName}`}
+                      className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-primary-400/40 focus:bg-black/40"
                       inputMode="numeric"
                       name={field.name}
                       onBlur={field.handleBlur}
@@ -164,13 +160,7 @@ export function GrossToNetPage() {
                       type="text"
                       value={field.state.value}
                     />
-                    {field.state.meta.isTouched &&
-                    getFieldError(field.state.meta.errors) ? (
-                      <p className={errorClassName}>
-                        {getFieldError(field.state.meta.errors)}
-                      </p>
-                    ) : null}
-                  </label>
+                  </FormField>
                 )}
               </form.Field>
 
@@ -181,34 +171,18 @@ export function GrossToNetPage() {
                 }}
               >
                 {(field) => (
-                  <label className="block">
-                    <span className={labelClassName}>Social Insurance income</span>
-                    <div className="mt-2 flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-4 py-3 focus-within:border-primary-400/40 focus-within:bg-black/40">
-                      <IMaskInput
-                        className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
-                        inputMode="numeric"
-                        mask={Number}
-                        name={field.name}
-                        onAccept={(value) => field.handleChange(String(value))}
-                        onBlur={field.handleBlur}
-                        placeholder="Enter social insurance income"
-                        radix="."
-                        scale={0}
-                        thousandsSeparator=","
-                        unmask={false}
-                        value={field.state.value}
-                      />
-                      <span className="text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
-                        VND
-                      </span>
-                    </div>
-                    {field.state.meta.isTouched &&
-                    getFieldError(field.state.meta.errors) ? (
-                      <p className={errorClassName}>
-                        {getFieldError(field.state.meta.errors)}
-                      </p>
-                    ) : null}
-                  </label>
+                  <MoneyInputField
+                    error={
+                      field.state.meta.isTouched
+                        ? getFieldError(field.state.meta.errors)
+                        : undefined
+                    }
+                    name="Social Insurance income"
+                    onBlur={field.handleBlur}
+                    onValueChange={field.handleChange}
+                    placeholder="Enter social insurance income"
+                    value={field.state.value}
+                  />
                 )}
               </form.Field>
 
@@ -221,48 +195,26 @@ export function GrossToNetPage() {
                 }}
               >
                 {(field) => (
-                  <fieldset className="block">
-                    <legend className={labelClassName}>Area</legend>
-                    <RadioGroup.Root
-                      className="mt-3 flex flex-wrap gap-3"
-                      name={field.name}
-                      onValueChange={(value) =>
-                        field.handleChange(value as (typeof areaOptions)[number])
-                      }
-                      value={field.state.value}
-                    >
-                      {areaOptions.map((area) => {
-                        const checked = field.state.value === area;
-
-                        return (
-                          <RadioGroup.Item
-                            className={`inline-flex cursor-pointer items-center gap-2 rounded-xl border px-4 py-3 text-sm transition ${
-                              checked
-                                ? "border-primary-400/40 bg-primary-500/12 text-white"
-                                : "border-white/10 bg-black/25 text-slate-300 hover:border-white/16 hover:bg-white/[0.04]"
-                            }`}
-                            key={area}
-                            onBlur={field.handleBlur}
-                            value={area}
-                          >
-                            <RadioGroup.Indicator className="h-2 w-2 rounded-full bg-current" />
-                            <span>{area}</span>
-                          </RadioGroup.Item>
-                        );
-                      })}
-                    </RadioGroup.Root>
-                    {field.state.meta.isTouched &&
-                    getFieldError(field.state.meta.errors) ? (
-                      <p className={errorClassName}>
-                        {getFieldError(field.state.meta.errors)}
-                      </p>
-                    ) : null}
-                  </fieldset>
+                  <RadioCardGroup
+                    error={
+                      field.state.meta.isTouched
+                        ? getFieldError(field.state.meta.errors)
+                        : undefined
+                    }
+                    label="Area"
+                    name={field.name}
+                    onBlur={field.handleBlur}
+                    onValueChange={(value) =>
+                      field.handleChange(value as (typeof areaOptions)[number])
+                    }
+                    options={areaOptionItems}
+                    value={field.state.value}
+                  />
                 )}
               </form.Field>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-2">
+            <FormActions>
               <Button type="submit" variant="primary">
                 Submit
               </Button>
@@ -273,7 +225,7 @@ export function GrossToNetPage() {
               >
                 Reset
               </Button>
-            </div>
+            </FormActions>
           </form>
         </section>
       </div>
