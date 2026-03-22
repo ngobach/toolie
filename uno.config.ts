@@ -4,16 +4,22 @@ export default defineConfig({
   presets: [presetUno()],
   shortcuts: {
     "panel-card":
-      "rounded-3xl border border-white/60 bg-white/75 shadow-xl shadow-slate-900/8 backdrop-blur",
+      "rounded-2xl border border-white/8 bg-white/4 shadow-2xl shadow-black/30 backdrop-blur-xl",
+    "soft-ring": "ring-1 ring-inset ring-primary-400/14",
   },
   theme: {
     colors: {
-      brand: {
-        50: "#f3f7ff",
-        100: "#e6efff",
-        500: "#356dff",
-        600: "#2658d8",
-        700: "#2149af",
+      primary: {
+        50: "#eef2ff",
+        100: "#e0e7ff",
+        200: "#c7d2fe",
+        300: "#a5b4fc",
+        400: "#818cf8",
+        500: "#6366f1",
+        600: "#4f46e5",
+        700: "#4338ca",
+        800: "#3730a3",
+        900: "#312e81",
       },
     },
   },
