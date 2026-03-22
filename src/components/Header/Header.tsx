@@ -14,7 +14,6 @@ export type HeaderAction = {
 export type HeaderBrand = {
   monogram: string;
   name: string;
-  subtitle?: string;
 };
 
 export type HeaderProps = {
@@ -27,7 +26,6 @@ export const defaultHeaderProps: HeaderProps = {
   brand: {
     monogram: "TU",
     name: "Toolie",
-    subtitle: "Utilities Portal",
   },
   navItems: [
     { label: "Products", to: "/" },
@@ -69,17 +67,11 @@ export function Header({
       <div className="px-5 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white text-xs font-semibold tracking-[0.24em] text-black">
-              {brand.monogram}
+            <div className="relative grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+              <div className="h-4 w-4 rounded-sm bg-white" />
+              <div className="absolute bottom-2 right-2 h-2 w-2 rounded-full bg-primary-400" />
             </div>
-            <div className="flex items-center gap-3">
-              <p className="text-sm font-medium text-white">{brand.name}</p>
-              {brand.subtitle ? (
-                <span className="hidden text-xs text-slate-500 sm:inline">
-                  {brand.subtitle}
-                </span>
-              ) : null}
-            </div>
+            <p className="text-sm font-medium text-white">{brand.name}</p>
           </div>
 
           <div className="hidden items-center gap-1 lg:flex">
