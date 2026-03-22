@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   ActivityPanel,
   CalloutPanel,
@@ -170,12 +169,9 @@ const actions = [
 ];
 
 export function HomePage() {
-  useEffect(() => {
-    document.title = "Toolie Home";
-  }, []);
-
   return (
     <PageLayout>
+      <title>Toolie Home</title>
       <div className="pt-10">
         <div className="grid gap-10 border-b border-white/8 pb-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <HeroSection

@@ -28,14 +28,12 @@ export const defaultHeaderProps: HeaderProps = {
     name: "Toolie",
   },
   navItems: [
-    { label: "Products", to: "/" },
-    { label: "Developers", to: "/" },
-    { label: "Resources", to: "/" },
-    { label: "Enterprise", to: "/" },
+    { label: "Home", to: "/" },
+    { label: "Tools", to: "/tools" },
   ],
   primaryAction: {
-    label: "Open Portal",
-    to: "/",
+    label: "Request new tool",
+    to: "/contact-us",
   },
 };
 
@@ -66,13 +64,16 @@ export function Header({
     <header className="sticky top-4 z-10 rounded-2xl border border-white/8 bg-black/55 backdrop-blur-xl">
       <div className="px-5 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+          <Link
+            className="flex items-center gap-3 rounded-md transition hover:opacity-90"
+            to="/"
+          >
             <div className="relative grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
               <div className="h-4 w-4 rounded-sm bg-white" />
               <div className="absolute bottom-2 right-2 h-2 w-2 rounded-full bg-primary-400" />
             </div>
             <p className="text-sm font-medium text-white">{brand.name}</p>
-          </div>
+          </Link>
 
           <div className="hidden items-center gap-1 lg:flex">
             <nav aria-label="Primary" className="flex items-center gap-1">
