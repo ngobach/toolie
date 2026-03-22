@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 const navItems = ["Products", "Developers", "Resources", "Enterprise"];
 
 const utilityCards = [
@@ -46,37 +49,90 @@ const actions = [
 ];
 
 export function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen px-4 py-5 text-slate-100 sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl flex-col">
         <header className="sticky top-4 z-10 rounded-2xl border border-white/8 bg-black/55 backdrop-blur-xl">
-          <div className="flex flex-col gap-4 px-5 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white text-xs font-semibold tracking-[0.24em] text-black">
-                TU
-              </div>
+          <div className="px-5 py-4 sm:px-6">
+            <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <p className="text-sm font-medium text-white">Toolie</p>
-                <span className="hidden text-xs text-slate-500 sm:inline">
-                  Utilities Portal
-                </span>
+                <div className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white text-xs font-semibold tracking-[0.24em] text-black">
+                  TU
+                </div>
+                <div className="flex items-center gap-3">
+                  <p className="text-sm font-medium text-white">Toolie</p>
+                  <span className="hidden text-xs text-slate-500 sm:inline">
+                    Utilities Portal
+                  </span>
+                </div>
               </div>
+
+              <div className="hidden items-center gap-1 lg:flex">
+                <nav aria-label="Primary" className="flex items-center gap-1">
+                  {navItems.map((item) => (
+                    <Link
+                      className="rounded-md px-3 py-2 text-sm text-slate-400 transition hover:bg-white/6 hover:text-white"
+                      key={item}
+                      to="/"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </nav>
+                <button className="ml-1 rounded-md border border-white/10 bg-white px-3.5 py-2 text-sm font-medium text-black transition hover:bg-slate-200">
+                  Open Portal
+                </button>
+              </div>
+
+              <button
+                aria-controls="mobile-menu"
+                aria-expanded={isMenuOpen}
+                aria-label="Toggle navigation menu"
+                className="grid h-10 w-10 place-items-center rounded-md border border-white/10 bg-white/4 text-slate-200 transition hover:bg-white/8 lg:hidden"
+                onClick={() => setIsMenuOpen((value) => !value)}
+                type="button"
+              >
+                <span className="relative h-4 w-4">
+                  <span
+                    className={`absolute left-0 top-1/2 h-px w-4 -translate-y-[5px] bg-current transition duration-200 ${isMenuOpen ? "translate-y-0 rotate-45" : ""}`}
+                  />
+                  <span
+                    className={`absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-current transition duration-200 ${isMenuOpen ? "opacity-0" : ""}`}
+                  />
+                  <span
+                    className={`absolute left-0 top-1/2 h-px w-4 translate-y-[5px] bg-current transition duration-200 ${isMenuOpen ? "translate-y-0 -rotate-45" : ""}`}
+                  />
+                </span>
+              </button>
             </div>
 
-            <nav aria-label="Primary" className="flex flex-wrap items-center gap-1">
-              {navItems.map((item) => (
-                <a
-                  className="rounded-md px-3 py-2 text-sm text-slate-400 transition hover:bg-white/6 hover:text-white"
-                  href="/"
-                  key={item}
-                >
-                  {item}
-                </a>
-              ))}
-              <button className="ml-1 rounded-md border border-white/10 bg-white px-3.5 py-2 text-sm font-medium text-black transition hover:bg-slate-200">
-                Open Portal
-              </button>
-            </nav>
+            <div
+              aria-hidden={!isMenuOpen}
+              className={`overflow-hidden transition-all duration-300 ease-out lg:hidden ${isMenuOpen ? "mt-4 max-h-80 opacity-100" : "max-h-0 opacity-0"}`}
+              id="mobile-menu"
+            >
+              <div
+                className={`border-t border-white/8 pt-4 transition-transform duration-300 ease-out ${isMenuOpen ? "translate-y-0" : "-translate-y-2"}`}
+              >
+                <nav aria-label="Mobile primary" className="flex flex-col gap-2">
+                  {navItems.map((item) => (
+                    <Link
+                      className="rounded-md px-3 py-3 text-sm text-slate-300 transition hover:bg-white/6 hover:text-white"
+                      key={item}
+                      onClick={() => setIsMenuOpen(false)}
+                      to="/"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </nav>
+                <button className="mt-3 w-full rounded-md border border-white/10 bg-white px-3.5 py-3 text-sm font-medium text-black transition hover:bg-slate-200">
+                  Open Portal
+                </button>
+              </div>
+            </div>
           </div>
         </header>
 
