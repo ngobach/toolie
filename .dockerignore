@@ -1,0 +1,14 @@
+.git
+.cursor
+node_modules
+dist
+.cache
+.DS_Store
+coverage
+*.log
+*.tsbuildinfo
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
