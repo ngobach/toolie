@@ -1,7 +1,8 @@
-import { defineConfig, presetUno } from "unocss";
+import { defineConfig } from "unocss";
+import { presetWind3 } from "@unocss/preset-wind3";
 
 export default defineConfig({
-  presets: [presetUno()],
+  presets: [presetWind3()],
   shortcuts: {
     "panel-card":
       "rounded-2xl border border-white/8 bg-white/4 shadow-2xl shadow-black/30 backdrop-blur-xl",
