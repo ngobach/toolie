@@ -1,4 +1,5 @@
 export { ActivityPanel } from "./ActivityPanel";
+export { Button } from "./Button";
 export { CalloutPanel } from "./CalloutPanel";
 export { Footer } from "./Footer";
 export { Header, defaultHeaderProps } from "./Header";
