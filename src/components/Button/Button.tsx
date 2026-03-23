@@ -14,7 +14,7 @@ const baseClassName =
 
 const variantClassNames: Record<ButtonVariant, string> = {
   primary:
-    "border-primary-300/40 bg-gradient-to-b from-primary-400 to-primary-600 font-semibold text-white shadow-[0_10px_30px_rgba(79,70,229,0.28)] hover:border-primary-200/70 hover:from-primary-300 hover:to-primary-500",
+    "border-primary-700/50 bg-primary-900 text-white font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-primary-600/50 hover:bg-primary-800",
   secondary:
     "border-white/10 bg-white/[0.03] text-slate-200 transition hover:bg-white/[0.06]",
 };

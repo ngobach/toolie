@@ -41,7 +41,7 @@ export function SegmentedControl({
             <RadioGroup.Item
               className={`inline-flex min-w-[52px] flex-1 items-center justify-center rounded-md border px-4 py-2.5 text-sm font-medium outline-none focus-visible:border-primary-200 focus-visible:ring-2 focus-visible:ring-primary-300/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black ${
                 checked
-                  ? "border-primary-300/40 bg-primary-500 text-white"
+                  ? "border-primary-300/40 bg-white/[0.06] text-white"
                   : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06]"
               }`}
               key={option.value}
