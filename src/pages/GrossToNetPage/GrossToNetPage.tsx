@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "@tanstack/react-form";
 import { IMaskInput } from "react-imask";
 import { z } from "zod";
@@ -203,6 +203,8 @@ const areaOptionItems = areaOptions.map((area) => ({
 }));
 
 export function GrossToNetPage() {
+  const resultSectionRef = useRef<HTMLElement | null>(null);
+  const shouldScrollToResultRef = useRef(false);
   const clearSnapshot = useGrossToNetSnapshotStore(
     (state) => state.clearSnapshot,
   );
@@ -223,6 +225,7 @@ export function GrossToNetPage() {
     onSubmit: async ({ value }) => {
       const parsed = formSchema.parse(value);
       const result = calculateGrossToNet(parsed);
+      shouldScrollToResultRef.current = true;
 
       setSnapshot({
         calculation: result,
@@ -243,6 +246,18 @@ export function GrossToNetPage() {
   }, [form, hasHydrated, snapshot]);
 
   const calculation = snapshot?.calculation ?? null;
+
+  useEffect(() => {
+    if (!calculation || !shouldScrollToResultRef.current) {
+      return;
+    }
+
+    resultSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    shouldScrollToResultRef.current = false;
+  }, [calculation]);
 
   return (
     <PageLayout>
@@ -416,7 +431,10 @@ export function GrossToNetPage() {
         </section>
 
         {calculation ? (
-          <section className="mt-8 rounded-2xl border border-white/8 bg-white/[0.02] p-6 sm:p-8">
+          <section
+            className="mt-8 rounded-2xl border border-white/8 bg-white/[0.02] p-6 sm:p-8"
+            ref={resultSectionRef}
+          >
             <div className="flex flex-col gap-2 border-b border-white/8 pb-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary-300">
