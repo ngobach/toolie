@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "@tanstack/react-form";
 import { IMaskInput } from "react-imask";
 import { z } from "zod";
@@ -11,6 +11,10 @@ import {
   PageLayout,
   SegmentedControl,
 } from "../../components";
+import {
+  type GrossToNetSnapshotCalculation,
+  useGrossToNetSnapshotStore,
+} from "../../stores/useGrossToNetSnapshotStore";
 
 const areaOptions = ["I", "II", "III", "IV"] as const;
 
@@ -70,25 +74,6 @@ const formSchema = z.object({
 
 type GrossToNetFormValues = z.infer<typeof formSchema>;
 
-type GrossToNetCalculation = {
-  area: (typeof areaOptions)[number];
-  dependantDeduction: number;
-  dependants: number;
-  employeeInsuranceTotal: number;
-  finalNetIncome: number;
-  fixedSalary: number;
-  grossIncome: number;
-  healthInsurance: number;
-  monthlyBonusAndTaxableAllowance: number;
-  nonTaxableAllowance: number;
-  personalDeduction: number;
-  pit: number;
-  pitTaxableIncome: number;
-  socialInsurance: number;
-  taxableIncomeBeforeDeductions: number;
-  unemploymentInsurance: number;
-};
-
 function parseCurrency(value: string) {
   return Number(value.replaceAll(",", ""));
 }
@@ -128,7 +113,9 @@ function calculateProgressivePit(monthlyTaxableIncome: number) {
   return Math.round(tax);
 }
 
-function calculateGrossToNet(values: GrossToNetFormValues): GrossToNetCalculation {
+function calculateGrossToNet(
+  values: GrossToNetFormValues,
+): GrossToNetSnapshotCalculation {
   const fixedSalary = parseCurrency(values.fixedSalary);
   const monthlyBonusAndTaxableAllowance = parseCurrency(
     values.monthlyBonusAndTaxableAllowance,
@@ -216,9 +203,12 @@ const areaOptionItems = areaOptions.map((area) => ({
 }));
 
 export function GrossToNetPage() {
-  const [calculation, setCalculation] = useState<GrossToNetCalculation | null>(
-    null,
+  const clearSnapshot = useGrossToNetSnapshotStore(
+    (state) => state.clearSnapshot,
   );
+  const hasHydrated = useGrossToNetSnapshotStore((state) => state.hasHydrated);
+  const setSnapshot = useGrossToNetSnapshotStore((state) => state.setSnapshot);
+  const snapshot = useGrossToNetSnapshotStore((state) => state.snapshot);
   const form = useForm({
     defaultValues: {
       area: "",
@@ -234,11 +224,25 @@ export function GrossToNetPage() {
       const parsed = formSchema.parse(value);
       const result = calculateGrossToNet(parsed);
 
-      setCalculation(result);
+      setSnapshot({
+        calculation: result,
+        submittedAt: new Date().toISOString(),
+        values: parsed,
+      });
 
       console.log("gross-to-net form submitted", result);
     },
   });
+
+  useEffect(() => {
+    if (!hasHydrated || !snapshot) {
+      return;
+    }
+
+    form.reset(snapshot.values);
+  }, [form, hasHydrated, snapshot]);
+
+  const calculation = snapshot?.calculation ?? null;
 
   return (
     <PageLayout>
@@ -400,7 +404,7 @@ export function GrossToNetPage() {
               <Button
                 onClick={() => {
                   form.reset();
-                  setCalculation(null);
+                  clearSnapshot();
                 }}
                 type="button"
                 variant="secondary"
