@@ -40,8 +40,9 @@ const formSchema = z.object({
     error: "Please select an area",
   }),
   dependants: dependantsSchema,
-  monthlyIncome: currencyFieldSchema,
-  socialInsuranceIncome: currencyFieldSchema,
+  fixedSalary: currencyFieldSchema,
+  monthlyBonusAndTaxableAllowance: currencyFieldSchema,
+  nonTaxableAllowance: currencyFieldSchema,
 });
 
 function getFieldError(errors: unknown[]) {
@@ -71,10 +72,11 @@ const areaOptionItems = areaOptions.map((area) => ({
 export function GrossToNetPage() {
   const form = useForm({
     defaultValues: {
-      area: "I" as (typeof areaOptions)[number],
+      area: "",
       dependants: "",
-      monthlyIncome: "",
-      socialInsuranceIncome: "",
+      fixedSalary: "",
+      monthlyBonusAndTaxableAllowance: "",
+      nonTaxableAllowance: "",
     },
     validators: {
       onSubmit: formSchema,
@@ -85,9 +87,12 @@ export function GrossToNetPage() {
       console.log("gross-to-net form submitted", {
         ...parsed,
         dependants: Number(parsed.dependants),
-        monthlyIncome: Number(parsed.monthlyIncome.replaceAll(",", "")),
-        socialInsuranceIncome: Number(
-          parsed.socialInsuranceIncome.replaceAll(",", ""),
+        fixedSalary: Number(parsed.fixedSalary.replaceAll(",", "")),
+        monthlyBonusAndTaxableAllowance: Number(
+          parsed.monthlyBonusAndTaxableAllowance.replaceAll(",", ""),
+        ),
+        nonTaxableAllowance: Number(
+          parsed.nonTaxableAllowance.replaceAll(",", ""),
         ),
       });
     },
@@ -113,110 +118,137 @@ export function GrossToNetPage() {
               void form.handleSubmit();
             }}
           >
-            <div className="grid gap-6 md:grid-cols-2">
-              <form.Field
-                name="monthlyIncome"
-                validators={{
-                  onBlur: currencyFieldSchema,
-                }}
-              >
-                {(field) => (
-                  <MoneyInputField
-                    error={
-                      field.state.meta.isTouched
-                        ? getFieldError(field.state.meta.errors)
-                        : undefined
-                    }
-                    name="Monthly income"
-                    onBlur={field.handleBlur}
-                    onValueChange={field.handleChange}
-                    placeholder="Enter monthly income"
-                    value={field.state.value}
-                  />
-                )}
-              </form.Field>
-
-              <form.Field
-                name="dependants"
-                validators={{
-                  onBlur: dependantsSchema,
-                }}
-              >
-                {(field) => (
-                  <FormField
-                    error={
-                      field.state.meta.isTouched
-                        ? getFieldError(field.state.meta.errors)
-                        : undefined
-                    }
-                    label="Dependants"
-                  >
-                    <IMaskInput
-                      className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-primary-400/40 focus:bg-black/40"
-                      inputMode="numeric"
-                      mask={Number}
-                      name={field.name}
-                      onAccept={(value) => field.handleChange(String(value))}
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div className="space-y-6">
+                <form.Field
+                  name="fixedSalary"
+                  validators={{
+                    onBlur: currencyFieldSchema,
+                  }}
+                >
+                  {(field) => (
+                    <MoneyInputField
+                      error={
+                        field.state.meta.isTouched
+                          ? getFieldError(field.state.meta.errors)
+                          : undefined
+                      }
+                      name="Fixed salary"
                       onBlur={field.handleBlur}
-                      placeholder="Enter number of dependants"
-                      radix="."
-                      scale={0}
-                      thousandsSeparator=""
-                      unmask={false}
+                      onValueChange={field.handleChange}
+                      placeholder="Enter fixed salary"
+                      tooltip="Insurable salary"
                       value={field.state.value}
                     />
-                  </FormField>
-                )}
-              </form.Field>
+                  )}
+                </form.Field>
 
-              <form.Field
-                name="socialInsuranceIncome"
-                validators={{
-                  onBlur: currencyFieldSchema,
-                }}
-              >
-                {(field) => (
-                  <MoneyInputField
-                    error={
-                      field.state.meta.isTouched
-                        ? getFieldError(field.state.meta.errors)
-                        : undefined
-                    }
-                    name="Social Insurance income"
-                    onBlur={field.handleBlur}
-                    onValueChange={field.handleChange}
-                    placeholder="Enter social insurance income"
-                    value={field.state.value}
-                  />
-                )}
-              </form.Field>
+                <form.Field
+                  name="monthlyBonusAndTaxableAllowance"
+                  validators={{
+                    onBlur: currencyFieldSchema,
+                  }}
+                >
+                  {(field) => (
+                    <MoneyInputField
+                      error={
+                        field.state.meta.isTouched
+                          ? getFieldError(field.state.meta.errors)
+                          : undefined
+                      }
+                      name="Monthly bonus & taxable allowance"
+                      onBlur={field.handleBlur}
+                      onValueChange={field.handleChange}
+                      placeholder="Enter monthly bonus and taxable allowance"
+                      value={field.state.value}
+                    />
+                  )}
+                </form.Field>
 
-              <form.Field
-                name="area"
-                validators={{
-                  onBlur: z.enum(areaOptions, {
-                    error: "Please select an area",
-                  }),
-                }}
-              >
-                {(field) => (
-                  <SegmentControl
-                    error={
-                      field.state.meta.isTouched
-                        ? getFieldError(field.state.meta.errors)
-                        : undefined
-                    }
-                    label="Area"
-                    name={field.name}
-                    onBlur={field.handleBlur}
-                    onValueChange={(value) =>
-                      field.handleChange(value as (typeof areaOptions)[number])
-                    }
-                    options={areaOptionItems}
-                    value={field.state.value}
-                  />
-                )}
-              </form.Field>
+                <form.Field
+                  name="nonTaxableAllowance"
+                  validators={{
+                    onBlur: currencyFieldSchema,
+                  }}
+                >
+                  {(field) => (
+                    <MoneyInputField
+                      error={
+                        field.state.meta.isTouched
+                          ? getFieldError(field.state.meta.errors)
+                          : undefined
+                      }
+                      name="Non-taxable allowance"
+                      onBlur={field.handleBlur}
+                      onValueChange={field.handleChange}
+                      placeholder="Enter non-taxable allowance"
+                      value={field.state.value}
+                    />
+                  )}
+                </form.Field>
+              </div>
+
+              <div className="space-y-6">
+                <form.Field
+                  name="dependants"
+                  validators={{
+                    onBlur: dependantsSchema,
+                  }}
+                >
+                  {(field) => (
+                    <FormField
+                      error={
+                        field.state.meta.isTouched
+                          ? getFieldError(field.state.meta.errors)
+                          : undefined
+                      }
+                      label="Dependants"
+                    >
+                      <IMaskInput
+                        className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-primary-400/40 focus:bg-black/40"
+                        inputMode="numeric"
+                        mask={Number}
+                        name={field.name}
+                        onAccept={(value) => field.handleChange(String(value))}
+                        onBlur={field.handleBlur}
+                        placeholder="Enter number of dependants"
+                        radix="."
+                        scale={0}
+                        thousandsSeparator=""
+                        unmask={false}
+                        value={field.state.value}
+                      />
+                    </FormField>
+                  )}
+                </form.Field>
+
+                <form.Field
+                  name="area"
+                  validators={{
+                    onBlur: z.enum(areaOptions, {
+                      error: "Please select an area",
+                    }),
+                  }}
+                >
+                  {(field) => (
+                    <SegmentControl
+                      error={
+                        field.state.meta.isTouched
+                          ? getFieldError(field.state.meta.errors)
+                          : undefined
+                      }
+                      label="Area"
+                      name={field.name}
+                      onBlur={field.handleBlur}
+                      onValueChange={(value) =>
+                        field.handleChange(value)
+                      }
+                      options={areaOptionItems}
+                      value={field.state.value}
+                    />
+                  )}
+                </form.Field>
+              </div>
             </div>
 
             <FormActions>
