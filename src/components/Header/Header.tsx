@@ -61,7 +61,7 @@ export function Header({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-4 z-10 rounded-2xl border border-white/8 bg-black/55 backdrop-blur-xl">
+    <header className="sticky top-6 z-10 rounded-2xl border border-white/8 bg-black/55 backdrop-blur-xl">
       <div className="px-5 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-4">
           <Link
