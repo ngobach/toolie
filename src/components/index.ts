@@ -11,7 +11,7 @@ export { MoneyInputField } from "./MoneyInputField";
 export { PageIntro } from "./PageIntro";
 export { PageLayout } from "./PageLayout";
 export { QuickActionsPanel } from "./QuickActionsPanel";
-export { SegmentControl } from "./SegmentControl";
+export { SegmentedControl } from "./SegmentedControl";
 export { StatsGrid } from "./StatsGrid";
 export { ToolCard } from "./ToolCard";
 export { UtilityCard } from "./UtilityCard";

@@ -1,22 +1,22 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { FieldErrorText } from "../FieldErrorText";
 
-export type SegmentControlOption = {
+export type SegmentedControlOption = {
   label: string;
   value: string;
 };
 
-export type SegmentControlProps = {
+export type SegmentedControlProps = {
   error?: string;
   label: string;
   name: string;
   onBlur: () => void;
   onValueChange: (value: string) => void;
-  options: SegmentControlOption[];
+  options: SegmentedControlOption[];
   value: string;
 };
 
-export function SegmentControl({
+export function SegmentedControl({
   error,
   label,
   name,
@@ -24,7 +24,7 @@ export function SegmentControl({
   onValueChange,
   options,
   value,
-}: SegmentControlProps) {
+}: SegmentedControlProps) {
   return (
     <fieldset className="block">
       <legend className="text-sm font-medium text-slate-200">{label}</legend>
