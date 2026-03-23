@@ -372,6 +372,8 @@ export function GrossToNetPage() {
                         className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-primary-400/40 focus:bg-black/40"
                         inputMode="numeric"
                         mask={Number}
+                        max={10}
+                        min={0}
                         name={field.name}
                         onAccept={(value) => field.handleChange(String(value))}
                         onBlur={field.handleBlur}
