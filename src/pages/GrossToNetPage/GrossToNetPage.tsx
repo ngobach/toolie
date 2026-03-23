@@ -9,6 +9,7 @@ import {
   MoneyInputField,
   PageIntro,
   PageLayout,
+  ResultBreakdown,
   SegmentedControl,
 } from "../../components";
 import {
@@ -452,74 +453,69 @@ export function GrossToNetPage() {
             </div>
 
             <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <div className="space-y-3 rounded-xl border border-white/8 bg-black/20 p-4">
-                <p className="text-sm font-medium text-white">Income</p>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Fixed salary</span>
-                  <span>{formatCurrency(calculation.fixedSalary)} VND</span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Bonus & taxable allowance</span>
-                  <span>
-                    {formatCurrency(
-                      calculation.monthlyBonusAndTaxableAllowance,
-                    )}{" "}
-                    VND
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Non-taxable allowance</span>
-                  <span>
-                    {formatCurrency(calculation.nonTaxableAllowance)} VND
-                  </span>
-                </div>
-                <div className="flex items-center justify-between border-t border-white/8 pt-3 text-sm font-medium text-white">
-                  <span>Gross income</span>
-                  <span>{formatCurrency(calculation.grossIncome)} VND</span>
-                </div>
-              </div>
+              <ResultBreakdown.Card title="Income">
+                <ResultBreakdown.Item
+                  label="Fixed salary"
+                  value={`${formatCurrency(calculation.fixedSalary)} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="Bonus & taxable allowance"
+                  value={`${formatCurrency(
+                    calculation.monthlyBonusAndTaxableAllowance,
+                  )} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="Non-taxable allowance"
+                  value={`${formatCurrency(calculation.nonTaxableAllowance)} VND`}
+                />
+                <ResultBreakdown.Item variant="divider" />
+                <ResultBreakdown.Item
+                  label="Gross income"
+                  value={`${formatCurrency(calculation.grossIncome)} VND`}
+                  variant="pair-strong"
+                />
+              </ResultBreakdown.Card>
 
-              <div className="space-y-3 rounded-xl border border-white/8 bg-black/20 p-4">
-                <p className="text-sm font-medium text-white">Deductions</p>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Social insurance</span>
-                  <span>{formatCurrency(calculation.socialInsurance)} VND</span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Health insurance</span>
-                  <span>{formatCurrency(calculation.healthInsurance)} VND</span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Unemployment insurance</span>
-                  <span>
-                    {formatCurrency(calculation.unemploymentInsurance)} VND
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>PIT taxable income</span>
-                  <span>{formatCurrency(calculation.pitTaxableIncome)} VND</span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Personal deduction</span>
-                  <span>{formatCurrency(calculation.personalDeduction)} VND</span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>Dependant deduction</span>
-                  <span>
-                    {formatCurrency(calculation.dependantDeduction)} VND
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-sm text-slate-300">
-                  <span>PIT</span>
-                  <span>{formatCurrency(calculation.pit)} VND</span>
-                </div>
-                <div className="flex items-center justify-between border-t border-white/8 pt-3 text-sm font-medium text-white">
-                  <span>Total insurance</span>
-                  <span>
-                    {formatCurrency(calculation.employeeInsuranceTotal)} VND
-                  </span>
-                </div>
-              </div>
+              <ResultBreakdown.Card title="Deductions">
+                <ResultBreakdown.Item
+                  label="Social insurance"
+                  value={`${formatCurrency(calculation.socialInsurance)} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="Health insurance"
+                  value={`${formatCurrency(calculation.healthInsurance)} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="Unemployment insurance"
+                  value={`${formatCurrency(
+                    calculation.unemploymentInsurance,
+                  )} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="PIT taxable income"
+                  value={`${formatCurrency(calculation.pitTaxableIncome)} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="Personal deduction"
+                  value={`${formatCurrency(calculation.personalDeduction)} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="Dependant deduction"
+                  value={`${formatCurrency(calculation.dependantDeduction)} VND`}
+                />
+                <ResultBreakdown.Item
+                  label="PIT"
+                  value={`${formatCurrency(calculation.pit)} VND`}
+                />
+                <ResultBreakdown.Item variant="divider" />
+                <ResultBreakdown.Item
+                  label="Total insurance"
+                  value={`${formatCurrency(
+                    calculation.employeeInsuranceTotal,
+                  )} VND`}
+                  variant="pair-strong"
+                />
+              </ResultBreakdown.Card>
             </div>
           </section>
         ) : null}
