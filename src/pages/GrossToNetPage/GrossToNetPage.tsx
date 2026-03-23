@@ -232,8 +232,6 @@ export function GrossToNetPage() {
         submittedAt: new Date().toISOString(),
         values: parsed,
       });
-
-      console.log("gross-to-net form submitted", result);
     },
   });
 
@@ -264,7 +262,7 @@ export function GrossToNetPage() {
       <title>Gross to Net | Toolie</title>
       <div className="py-10">
         <PageIntro
-          description="This is a blank placeholder page for the future Gross to Net tool."
+          description="Estimate monthly take-home income from salary, allowances, dependants, and area-based insurance rules."
           eyebrow="Tools"
           title="Gross to Net"
           variant="compact"
