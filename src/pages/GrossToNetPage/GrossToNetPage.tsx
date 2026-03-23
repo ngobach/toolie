@@ -152,9 +152,9 @@ function calculateGrossToNet(
   const pitTaxableIncome = Math.max(
     0,
     taxableIncomeBeforeDeductions -
-      employeeInsuranceTotal -
-      personalDeduction -
-      dependantDeduction,
+    employeeInsuranceTotal -
+    personalDeduction -
+    dependantDeduction,
   );
   const pit = calculateProgressivePit(pitTaxableIncome);
   const finalNetIncome = grossIncome - employeeInsuranceTotal - pit;
@@ -278,8 +278,8 @@ export function GrossToNetPage() {
               void form.handleSubmit();
             }}
           >
-            <div className="grid gap-6 lg:grid-cols-2">
-              <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="lg:col-span-1">
                 <form.Field
                   name="fixedSalary"
                   validators={{
@@ -302,29 +302,9 @@ export function GrossToNetPage() {
                     />
                   )}
                 </form.Field>
+              </div>
 
-                <form.Field
-                  name="monthlyBonusAndTaxableAllowance"
-                  validators={{
-                    onBlur: nonNegativeCurrencyFieldSchema,
-                  }}
-                >
-                  {(field) => (
-                    <MoneyInputField
-                      error={
-                        field.state.meta.isTouched
-                          ? getFieldError(field.state.meta.errors)
-                          : undefined
-                      }
-                      name="Monthly bonus & taxable allowance"
-                      onBlur={field.handleBlur}
-                      onValueChange={field.handleChange}
-                      placeholder="Enter monthly bonus and taxable allowance"
-                      value={field.state.value}
-                    />
-                  )}
-                </form.Field>
-
+              <div className="lg:col-span-1">
                 <form.Field
                   name="nonTaxableAllowance"
                   validators={{
@@ -348,7 +328,31 @@ export function GrossToNetPage() {
                 </form.Field>
               </div>
 
-              <div className="space-y-6">
+              <div className="lg:col-span-1">
+                <form.Field
+                  name="monthlyBonusAndTaxableAllowance"
+                  validators={{
+                    onBlur: nonNegativeCurrencyFieldSchema,
+                  }}
+                >
+                  {(field) => (
+                    <MoneyInputField
+                      error={
+                        field.state.meta.isTouched
+                          ? getFieldError(field.state.meta.errors)
+                          : undefined
+                      }
+                      name="Monthly bonus & taxable allowance"
+                      onBlur={field.handleBlur}
+                      onValueChange={field.handleChange}
+                      placeholder="Enter monthly bonus and taxable allowance"
+                      value={field.state.value}
+                    />
+                  )}
+                </form.Field>
+              </div>
+
+              <div className="sm:col-span-1 lg:col-span-1">
                 <form.Field
                   name="dependants"
                   validators={{
@@ -381,7 +385,9 @@ export function GrossToNetPage() {
                     </FormField>
                   )}
                 </form.Field>
+              </div>
 
+              <div className="sm:col-span-2 lg:col-span-1">
                 <form.Field
                   name="area"
                   validators={{
@@ -400,9 +406,7 @@ export function GrossToNetPage() {
                       label="Area"
                       name={field.name}
                       onBlur={field.handleBlur}
-                      onValueChange={(value) =>
-                        field.handleChange(value)
-                      }
+                      onValueChange={(value) => field.handleChange(value)}
                       options={areaOptionItems}
                       value={field.state.value}
                     />
