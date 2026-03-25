@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import {
   ContactUsPage,
   GrossToNetPage,
-  HomePage,
+  OldHomePage,
   NotFoundPage,
   ToolsHubPage,
 } from "./pages";
@@ -10,7 +10,8 @@ import {
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<Navigate to="/tools" replace />} />
+      <Route path="/old" element={<OldHomePage />} />
       <Route path="/contact-us" element={<ContactUsPage />} />
       <Route path="/tools" element={<ToolsHubPage />} />
       <Route path="/tools/gross-to-net" element={<GrossToNetPage />} />

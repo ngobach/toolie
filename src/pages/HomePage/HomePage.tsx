@@ -168,7 +168,7 @@ const actions = [
   "Export operations report",
 ];
 
-export function HomePage() {
+export function OldHomePage() {
   return (
     <PageLayout>
       <title>Toolie Home</title>

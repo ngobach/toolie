@@ -1,5 +1,5 @@
 export { ContactUsPage } from "./ContactUsPage/ContactUsPage";
 export { GrossToNetPage } from "./GrossToNetPage/GrossToNetPage";
-export { HomePage } from "./HomePage/HomePage";
+export { OldHomePage } from "./HomePage/HomePage";
 export { NotFoundPage } from "./NotFoundPage/NotFoundPage";
 export { ToolsHubPage } from "./ToolsHubPage/ToolsHubPage";
